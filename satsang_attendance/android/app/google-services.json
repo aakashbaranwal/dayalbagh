@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "521742080538",
+    "firebase_url": "https://satsang-attendance.firebaseio.com",
+    "project_id": "satsang-attendance",
+    "storage_bucket": "satsang-attendance.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:521742080538:android:d4c9ef75f1d35cf58bcfa3",
+        "android_client_info": {
+          "package_name": "aakashbaranwal.github.io.satsang_attendance"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "521742080538-ql8c5b28m5nea366c4f8l0gflvrt6cbr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "aakashbaranwal.github.io.satsang_attendance",
+            "certificate_hash": "92b4b06bc17036e26be9ff4d4c1dba7cb522d59a"
+          }
+        },
+        {
+          "client_id": "521742080538-qoond844jh0f2n3390hb7odv4noalgda.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKNQWBh0GP5AKZQzIMwY1jU5HrhGSeUtU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "521742080538-qoond844jh0f2n3390hb7odv4noalgda.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
