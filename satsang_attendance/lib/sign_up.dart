@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:satsang_attendance/account_setup_details.dart';
+import 'package:satsang_attendance/services/auth_service.dart';
 import 'package:satsang_attendance/services/usermanagement.dart';
-import 'validator.dart';
+
 
 class Signup extends StatefulWidget {
   @override
@@ -12,8 +13,22 @@ class Signup extends StatefulWidget {
 class _SignupState extends State<Signup> {
 
   String _email;
-  String _phone;
   String _password;
+
+  String phoneNo, verificationId, smsCode;
+  bool codeSent = false;
+
+  final formKey = new GlobalKey<FormState>();
+
+
+  bool _obscureText = true;
+
+  // Toggles the password show status
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
 
   bool validateStructure(String value){
     String  pattern = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
@@ -31,19 +46,14 @@ class _SignupState extends State<Signup> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-    //          IconButton(
-    //          icon: Icon(Icons.arrow_back),
-    //          tooltip: 'Back',
-    //          onPressed: () {
-    ////            setState(() {
-    ////
-    ////            });
-    //            Navigator.of(context).pushNamed('/landingpage');
-    //          },
-    //        ),
+
               TextFormField(
-                validator: EmailValidator.validate,
-                decoration: InputDecoration(hintText: 'Email'),   // Email
+                //validator: EmailValidator.validate,
+                decoration: const InputDecoration(
+              labelText: 'Email',
+              icon: const Padding(
+                  padding: const EdgeInsets.only(top: 15.0),
+                  child: const Icon(Icons.email))),
                 onChanged: (value) {
                   validateStructure(value);
                   setState(() {
@@ -52,14 +62,31 @@ class _SignupState extends State<Signup> {
                 },
               ),
               SizedBox(height: 15.0),
-              TextField(
-                decoration: InputDecoration(hintText: 'Password'),
-                onChanged: (value) {
-                  setState(() {
-                    _password = value;
-                  });
-                },
+              Column(
+                children: <Widget>[
+                  TextFormField(
+                    decoration: const InputDecoration(
+                        labelText: 'Password',
+                        icon: const Padding(
+                          padding: const EdgeInsets.only(top: 15.0),
+                          child: const Icon(Icons.lock),
+                        )
+                    ),
+
+                    validator: (val) => val.length < 6 ? 'Password too short.' : null,
+                    onSaved: (val) => _password = val,
+                    obscureText: _obscureText,
+                  ),
+                  new FlatButton(
+                      onPressed: _toggle,
+                      child: Icon(Icons.remove_red_eye)
+                    //new Text(_obscureText ? "Show" : "Hide"),
+                  ),
+                ],
               ),
+
+
+
 
               SizedBox(height: 20.0),
               RaisedButton(
@@ -72,13 +99,26 @@ class _SignupState extends State<Signup> {
                 onPressed: (){
                   FirebaseAuth.instance.createUserWithEmailAndPassword(email: _email, password: _password).then((signedInUser){
                     ManageUser().storeNewUser(signedInUser.user, context);
+                    print("Logged IN");
                   }).catchError((e){
                     print(e);
                   });
 //                  Scaffold.of(context)
 //                      .showSnackBar(SnackBar(content: Text('Processing Data')));
-                  Navigator.of(context).pushNamed('/landingpage');
+                  //Navigator.of(context).pushNamed('/landingpage');
+
+
+
                 },
+              ),
+
+
+              SizedBox(
+                height: 20.0,
+                width: 150.0,
+                child: Divider(
+                  color: Colors.deepPurple,
+                ),
               ),
 
               SizedBox(height: 20.0),
